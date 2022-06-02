@@ -1,9 +1,14 @@
 asgiref==3.5.2
+certifi==2022.5.18.1
+cloudinary==1.29.0
 Django==4.0.4
 django-rest-framework==0.1.0
 djangorestframework==3.13.1
 drf-base64==2.0
 Pillow==9.1.1
+python-decouple==3.6
 pytz==2022.1
+six==1.16.0
 sqlparse==0.4.2
 tzdata==2022.1
+urllib3==1.26.9
