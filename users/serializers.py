@@ -1,3 +1,4 @@
+from django.conf import settings
 from drf_base64.serializers import ModelSerializer
 import cloudinary
 
@@ -9,6 +10,12 @@ class UserListSerializer(ModelSerializer):
         model = User
         exclude = ('is_staff', 'status_delete', 'is_active',
                    'is_superuser', 'password', 'user_permissions', 'groups')
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response.pop("image")
+        response.setdefault('image', instance.image.public_id)
+        return response
 
 class UserSerializer(ModelSerializer):
 
@@ -34,7 +41,7 @@ class UserSerializer(ModelSerializer):
         validated_data.pop('email', None)
         image = validated_data.get('image', None)
         if not image is None:
-            if instance.image == 'https://res.cloudinary.com/instituto-tecnol-gico-de-oaxaca/image/upload/v1654150473/default_fltufw.webp':    
+            if instance.image == 'https://res.cloudinary.com/instituto-tecnol-gico-de-oaxaca/v1654150473/default_fltufw.webp':    
                 upload_data = cloudinary.uploader.upload(
                     image, folder=f'media/users/{instance.email}/')
                 validated_data['image'] = upload_data['secure_url']
@@ -42,9 +49,7 @@ class UserSerializer(ModelSerializer):
                 print(instance.image)
                 upload_data = cloudinary.uploader.upload(
                     image, public_id=f'media/users/{instance.email}/{str(instance.image).split("/")[-1]}')
-                validated_data['image'] = upload_data['secure_url']
+                validated_data['image'] = upload_data['secure_url']            
         return super().update(instance, validated_data)
-
-    def to_representation(self, instance):
-        return UserListSerializer(instance).data
+        
 
