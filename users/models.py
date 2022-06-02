@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
+from cloudinary.models import CloudinaryField
+
 
 def upload_load(instance, filename):
     return f'photos_users/{instance.email}/{filename}'
@@ -37,8 +39,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         unique=True, max_length=100, null=False, verbose_name='email',)
     phone = models.CharField(verbose_name='phone', max_length=10)
-    image = models.ImageField(upload_to=upload_load, default='default.jpg',
-                              max_length=255, null=True, blank=True)
+    image = CloudinaryField(
+        'image', null=True, default='https://res.cloudinary.com/instituto-tecnol-gico-de-oaxaca/image/upload/v1654150473/default_fltufw.webp')
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
