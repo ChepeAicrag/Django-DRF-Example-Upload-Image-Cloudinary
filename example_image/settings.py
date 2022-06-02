@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'rest_framework',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,6 @@ cloudinary.config(
     api_key=config('CLOUDINARY_API_KEY'),
     api_secret=config('CLOUDINARY_API_SECRET'),
 )
+
+CLOUDINARY_PATH = 'https://res.cloudinary.com/instituto-tecnol-gico-de-oaxaca/'
+CLOUDINARY_PATH_DEFAULT_USER = 'v1654150473/default_fltufw.webp'
