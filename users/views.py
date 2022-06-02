@@ -19,9 +19,6 @@ class CrearListarUser(APIView):
         return Response(serializer.data, status=HTTP_200_OK)
 
     def post(self, request):
-        request.data._mutable = True
-        file = request.data.get('image', None)
-        request.data['image'] = file
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
